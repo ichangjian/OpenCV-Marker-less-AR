@@ -40,7 +40,7 @@
 #include <time.h>
 
 #include "commonCvFunctions.h"
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 #include "cameraCalibration.h"
 #include "guiAR.h"
 #ifdef _DEBUG
@@ -50,7 +50,7 @@
 using namespace std;
 using namespace cv;
 using namespace cvar;
-using namespace cvar::or;
+using namespace cvar::OR;
 
 int main(int argc, char * argv[])
 {
@@ -145,7 +145,7 @@ int main(int argc, char * argv[])
 			cin >> opt2;
 
 			ifstream ifs(opt2.c_str());
-			if(ifs!=NULL){
+			if(ifs.is_open()){
 				bool exitflag2 = false;
 				int count = 0;
 				string buf;
@@ -221,8 +221,8 @@ int main(int argc, char * argv[])
 //			char buf[256];
 			string buf;
 			ifstream ifs(regist_list.c_str());
-			if(ifs!=NULL){
-//			if(ifs.is_open()){
+			// if(ifs!=NULL){
+			if(ifs.is_open()){
 				bool exitflag2 = false;
 				int count = 0;
 				int id = 0;
@@ -329,7 +329,7 @@ int main(int argc, char * argv[])
 						line(queryimg,result_pt[i],result_pt[i+1],val);
 					}
 
-					namedWindow("result",CV_WINDOW_AUTOSIZE);
+					namedWindow("result",cv::WINDOW_AUTOSIZE);
 					imshow("result", queryimg);
 					waitKey(0);
 				}
@@ -369,8 +369,8 @@ int main(int argc, char * argv[])
 			string buf;
 			ifstream ifs(img_list.c_str());
 			ofstream ofs(result_file.c_str());
-			if(ifs!=NULL){
-//			if(ifs.is_open()){
+			// if(ifs!=NULL){
+			if(ifs.is_open()){
 				int id = 1;
 //				while(!ifs.eof()){
 				while(ifs && getline(ifs, buf)){
@@ -452,7 +452,7 @@ int main(int argc, char * argv[])
 			else{
 				// create window
 				const string		windowNameCam = "Camera Image";
-				namedWindow( windowNameCam, CV_WINDOW_AUTOSIZE );
+				namedWindow( windowNameCam, cv::WINDOW_AUTOSIZE );
 
 
 				// for capture image
@@ -493,7 +493,7 @@ int main(int argc, char * argv[])
 				} while( waitKey( 1 ) != 'q' && num_frames <= img_num);
 
 				cout << " --- Finished." << endl;
-				cvDestroyWindow(windowNameCam.c_str());
+				destroyWindow(windowNameCam.c_str());
 			}
 		}
 		else if(opt=="camera_calibration"){
@@ -518,8 +518,8 @@ int main(int argc, char * argv[])
 
 			ifstream ifs(img_list.c_str());
 			string buf;
-			if(ifs!=NULL){
-//			if(ifs.is_open()){
+			// if(ifs!=NULL){
+			if(ifs.is_open()){
 				int id = 1;
 //				while(!ifs.eof()){
 				while(ifs && getline(ifs, buf)){

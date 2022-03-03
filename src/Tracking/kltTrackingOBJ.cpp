@@ -54,7 +54,7 @@ kltTrackingOBJ::~kltTrackingOBJ(void)
 }
 
 
-void kltTrackingOBJ::startTracking(const Mat& grayImg, vector<Point2f>& pts)
+void kltTrackingOBJ::startTracking(const Mat& grayImg, vector<Point2f> pts)
 {
 	Mat mask = createMask(grayImg.size(), pts);
 	goodFeaturesToTrack(grayImg, corners, max_corners, quality_level, min_distance, mask);
@@ -84,7 +84,7 @@ bool kltTrackingOBJ::onTracking(const Mat& grayImg)
 	}
 	else{
 //		homographyMat = findHomography(transPointVecToMat(corners,track_status), transPointVecToMat(next_corners,track_status),CV_RANSAC,5);
-		homographyMat = findHomography(Mat(corners), Mat(next_corners),track_status,CV_RANSAC,5);
+		homographyMat = findHomography(Mat(corners), Mat(next_corners),track_status,cv::RANSAC,5);
 //		Mat poseMat = findHomography(transPointVecToMat(corners), transPointVecToMat(next_corners), status, CV_RANSAC);
 
 		if(countNonZero(homographyMat)==0){

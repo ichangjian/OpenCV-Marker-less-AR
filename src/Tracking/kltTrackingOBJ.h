@@ -61,7 +61,7 @@ public:
 	\param[in] grayImg first farme in gray scale
 	\param[in] pts initial object position: pts[0]:Top Left, pts[1]:Bottom Left, pts[2]:Bottom Right, pts[3]:Top Right
 	*/
-	void startTracking(const cv::Mat& grayImg, std::vector<cv::Point2f>& pts);
+	void startTracking(const cv::Mat& grayImg, std::vector<cv::Point2f> pts);
 
 	//! Continue Tracking
 	/*!

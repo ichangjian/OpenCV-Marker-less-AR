@@ -31,7 +31,7 @@
 //
 //M*/
 #include "utilFunctions.h"
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
 
 using namespace std;
 using namespace cv;
@@ -39,6 +39,7 @@ using namespace cv;
 namespace cvar{
 
 // You want to create a matrix from a CSV file
+/*
 CvMat* loadCsvFileAsMatrix(char* filename, int cv_type)
 {
 	FILE* fp;
@@ -118,7 +119,7 @@ CvMat* loadCsvFileAsMatrix(char* filename, int cv_type)
 		return NULL;
 	}
 }
-
+*/
 
 void createMatchingImage(Mat& src_img, Mat& dest_img, vector<Point2f>& src_pts, vector<Point2f>& dest_pts)
 {
@@ -159,7 +160,7 @@ void createMatchingImage(Mat& src_img, Mat& dest_img, vector<Point>& src_pts, ve
 		line(resultimg, src_pts[i], dest_pts[i]+pt,Scalar(255));
 	}
 
-	namedWindow("matching",CV_WINDOW_AUTOSIZE);
+	namedWindow("matching",cv::WINDOW_AUTOSIZE);
 	imshow("matching", resultimg);
 	waitKey(0);
 }

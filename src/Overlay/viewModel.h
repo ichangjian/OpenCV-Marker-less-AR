@@ -36,7 +36,7 @@
 #include <opencv2/core/core.hpp>
 #include "modelObjectFactory.h"
 //#include "GLMetaseq.h"	// Model loader
-
+#include <map>
 namespace cvar{
 namespace overlay{
 
@@ -44,7 +44,7 @@ typedef struct{
 	modelObject* model;	// Model class
 	double scale;	// It specifies the size of the model
 	std::string modelFilename;	// The path to the model file
-	cv::Mat initRot;	// 3 Å~ 3 rotation matrix to the initial position (in the XY plane of markers Z = 0, Z is + direction is up, Y is + direction of depth)
+	cv::Mat initRot;	// 3 ÔøΩ~ 3 rotation matrix to the initial position (in the XY plane of markers Z = 0, Z is + direction is up, Y is + direction of depth)
 	cv::Mat initTrans;	// Movement component to the initial position
 	cv::Point2f	markerCenter;	// Marker center position
 	cv::Size markerSize;	// Marker Size
@@ -98,7 +98,7 @@ public:
 //	double model_scale;
 	std::map<int,MODEL_INFO>	model_map;
 
-	// ë“ÇøéÛÇØ
+	// ÔøΩ“ÇÔøΩÔøΩÔøΩ
 	int wait_frames;
 	MODEL_INFO wait_model;
 

@@ -42,7 +42,7 @@
 using namespace std;
 using namespace cv;
 using namespace cvar;
-using namespace cvar::or;
+using namespace cvar::OR;
 
 imageDB::imageDB(void)
 {
@@ -438,7 +438,7 @@ vector<resultInfo> imageDB::calcGeometryConsistentResult(const vector<KeyPoint>&
 			vote_table = imgVote_map[img_id];
 			calcPointPair(kp_vec, *vote_table, query_vec, reg_vec);
 //			Mat poseMat = findHomography(transPointVecToMat(reg_vec), transPointVecToMat(query_vec), CV_RANSAC, th_dist);	// get Homography Matrix
-			Mat poseMat = findHomography(Mat(reg_vec), Mat(query_vec), CV_RANSAC, th_dist);	// get Homography Matrix
+			Mat poseMat = findHomography(Mat(reg_vec), Mat(query_vec), cv::RANSAC, th_dist);	// get Homography Matrix
 //			Mat poseMat = findHomography(reg_vec, query_vec, CV_LMEDS);	// get Homography Matrix
 
 			// Affine Transform regist image with poseMat, and check its shape
@@ -566,7 +566,7 @@ void imageDB::setVoteNum(int vote_num)
 ///////////// Load & Save ////////////////////
 int imageDB::save(const string& filename) const
 {
-	FileStorage cvfs(filename,CV_STORAGE_WRITE);
+	FileStorage cvfs(filename,cv::FileStorage::WRITE);
 	this->write(cvfs, "imageDB");
 
 	return 0;
@@ -576,9 +576,9 @@ int imageDB::save(const string& filename) const
 int imageDB::load(const string& filename)
 {
 	try{
-		FileStorage cvfs(filename,CV_STORAGE_READ);
-		FileNode cvfn(cvfs.fs, NULL);
-		FileNode cvfn2 = cvfn["imageDB"];
+		FileStorage cvfs(filename,cv::FileStorage::READ);
+		// FileNode cvfn(cvfs.fs, NULL);
+		FileNode cvfn2 = cvfs["imageDB"];
 		this->read(cvfs, cvfn2);
 	}
 	catch(cv::Exception e){
@@ -597,7 +597,7 @@ int imageDB::load(const string& filename)
 
 int imageDB::write(FileStorage& cvfs, const string& name) const
 {
-	WriteStructContext ws(cvfs, name, CV_NODE_MAP);
+	cv::internal::WriteStructContext ws(cvfs, name, cv::FileNode::MAP);
 	cv::write(cvfs,"imageNum",imageNum);
 	cv::write(cvfs,"featureNum",featureNum);
 	cv::write(cvfs,"threshold",threshold);
@@ -633,12 +633,12 @@ int imageDB::read(const FileStorage& cvfs, const FileNode& node)
 int imageDB::writeFeatureKptMap(FileStorage& cvfs, const string& name) const
 {
 	try{
-		WriteStructContext ws(cvfs, name, CV_NODE_SEQ);
+		cv::internal::WriteStructContext ws(cvfs, name, cv::FileNode::SEQ);
 
 		multimap<int,featureInfo>::const_iterator itr = feature_KPT_map.begin();
 		featureInfo	feature_info;
 		while(itr!= feature_KPT_map.end()){
-			WriteStructContext ws2(cvfs, "", CV_NODE_MAP);
+			cv::internal::WriteStructContext ws2(cvfs, "", cv::FileNode::MAP);
 			cv::write(cvfs, "feature_id", itr->first);
 			feature_info = itr->second;
 			cv::write(cvfs, "keypoint_id",feature_info.keypoint_id);
@@ -682,11 +682,11 @@ int imageDB::readFeatureKptMap(const FileStorage& cvfs, const FileNode& node)
 
 int imageDB::writeKeyMap(FileStorage& cvfs, const string& name) const
 {
-	WriteStructContext ws(cvfs, name, CV_NODE_SEQ);
+	cv::internal::WriteStructContext ws(cvfs, name, cv::FileNode::SEQ);
 
 	map<int,KeyPoint>::const_iterator itr = keypoint_map.begin();
 	while(itr!= keypoint_map.end()){
-		WriteStructContext ws2(cvfs, "", CV_NODE_MAP);
+		cv::internal::WriteStructContext ws2(cvfs, "", cv::FileNode::MAP);
 		cv::write(cvfs, "keypoint_id", itr->first);
 		vector<KeyPoint>	kpt_vec;
 		kpt_vec.push_back(itr->second);
@@ -719,12 +719,12 @@ int imageDB::readKeyMap(const FileStorage& cvfs, const FileNode& node)
 
 int imageDB::writeImgInfoMap(FileStorage& cvfs, const string& name) const
 {
-	WriteStructContext ws(cvfs, name, CV_NODE_SEQ);
+	cv::internal::WriteStructContext ws(cvfs, name, cv::FileNode::SEQ);
 
 	imageInfo	img_info;
 	map<int, imageInfo>::const_iterator itr = imgInfo_map.begin();
 	while(itr!= imgInfo_map.end()){
-		WriteStructContext ws2(cvfs, "", CV_NODE_SEQ);
+		cv::internal::WriteStructContext ws2(cvfs, "", cv::FileNode::SEQ);
 		cv::write(cvfs, itr->first);
 		img_info = itr->second;
 		cv::write(cvfs, img_info.feature_num);

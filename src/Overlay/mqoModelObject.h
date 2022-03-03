@@ -34,7 +34,7 @@
 #define __MQO_MODELOBJECT__
 
 #include "GLMetaseq.h"
-#include "modelobject.h"
+#include "modelObject.h"
 
 namespace cvar{
 namespace overlay{

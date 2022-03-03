@@ -37,7 +37,7 @@
 #include <opencv2/features2d/features2d.hpp>
 
 namespace cvar{
-namespace or{
+namespace OR{
 
 class visualWords
 {
@@ -88,7 +88,6 @@ private:
 	int voteNum;
 	float radius;
 
-	static const int version = 120;
 };
 
 };

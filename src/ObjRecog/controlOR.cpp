@@ -31,13 +31,14 @@
 //
 //M*/
 #include "controlOR.h"
-#include <opencv2/nonfree/nonfree.hpp>
+#include <opencv2/xfeatures2d/nonfree.hpp>
+#include <opencv2/opencv.hpp>
 #include <sstream>
 
 using namespace std;
 using namespace cv;
 using namespace cvar;
-using namespace cvar::or;
+using namespace cvar::OR;
 //#include <iostream>
 
 controlOR::controlOR(void)
@@ -167,7 +168,7 @@ bool controlOR::setDetectorType(const std::string& detector_type)
 {
 	cv::Ptr<cv::FeatureDetector> tmp_detector;
 	try{
-		tmp_detector = FeatureDetector::create(detector_type);
+		tmp_detector = cv::xfeatures2d::SURF::create(); // FeatureDetector::create(detector_type);
 		if(tmp_detector.empty()){
 			return false;
 		}
@@ -186,7 +187,7 @@ bool controlOR::setDescriptorType(const std::string& descriptor_type)
 {
 	cv::Ptr<cv::DescriptorExtractor> tmp_descriptor;
 	try{
-		tmp_descriptor = DescriptorExtractor::create(descriptor_type);
+		tmp_descriptor = cv::xfeatures2d::SURF::create(); // DescriptorExtractor::create(descriptor_type);
 		if(tmp_descriptor.empty()){
 			return false;
 		}
@@ -212,7 +213,7 @@ int controlOR::getFeatureIdVec(const cv::Mat& desc_vec, vector<int>& id_list)
 	try{
 		// convert feature vector to Mat
 //		Mat desc_points = visual_words.convertFeatureMat(desc_vec);
-	
+
 		// query and obtain feature point indices
 		Mat indices = visual_words.querySearchDB(desc_vec);
 //		Mat indices = visual_words.querySearchDB(desc_points);
@@ -282,12 +283,12 @@ int controlOR::loadObjectDB(const string filename)
 	try{
 //		image_db.load(filename.c_str());
 		FileStorage cvfs(filename,FileStorage::READ);
-		FileNode cvfn(cvfs.fs, NULL);
+		// FileNode cvfn(cvfs.fs, NULL);
 
-		FileNode cvfn1 = cvfn["controlOR"];
+		FileNode cvfn1 = cvfs["controlOR"];
 		read(cvfn1);
 
-		FileNode cvfn2 = cvfn["imageDB"];
+		FileNode cvfn2 = cvfs["imageDB"];
 		image_db.read(cvfs, cvfn2);
 
 		visual_words.setVoteNum(voteNum);
@@ -304,10 +305,12 @@ int controlOR::loadObjectDB(const string filename)
 void controlOR::read(FileNode& cvfn)
 {
 	voteNum = cvfn["voteNum"];
-	detectorType = cvfn["detectorType"];
-	descriptorType = cvfn["descriptorType"];
-	feature_detector->create(detectorType);
-	descriptor_extractor->create(descriptorType);
+	// cv::read(cvfn["detectorType"],detectorType,"SURF");
+	// cv::read(cvfn["descriptorType"],descriptorType,"SURF");
+	// detectorType = cvfn["detectorType"];
+	// descriptorType = cvfn["descriptorType"];
+	feature_detector = cv::xfeatures2d::SURF::create();
+	descriptor_extractor = cv::xfeatures2d::SURF::create();
 }
 
 
@@ -324,7 +327,7 @@ int controlOR::saveObjectDB(const string filename) const
 
 void controlOR::write(FileStorage& fs, string name) const
 {
-	WriteStructContext ws(fs, name, CV_NODE_MAP);
+	internal::WriteStructContext ws(fs, name, cv::FileNode::MAP);
 	cv::write(fs, "voteNum", voteNum);
 	cv::write(fs, "detectorType", detectorType);
 	cv::write(fs, "descriptorType", descriptorType);
@@ -341,15 +344,15 @@ int controlOR::initializeFeatureDetector()
 //	SURF* surf_pt = new SURF(500,4,2,true);
 //	featureDetector = surf_pt;
 //	feature_dimention = 128;
-	cv::initModule_nonfree();
-	feature_detector = FeatureDetector::create(detectorType);	// create feature detector
-	descriptor_extractor = DescriptorExtractor::create(descriptorType);	// create descriptor extractor
+	// cv::initModule_nonfree();
+	feature_detector = cv::xfeatures2d::SURF::create();	   //FeatureDetector::create(detectorType);	// create feature detector
+	descriptor_extractor = cv::xfeatures2d::SURF::create(); // DescriptorExtractor::create(descriptorType);	// create descriptor extractor
 
 	return 0;
 }
 
 //int controlOR::extractFeatures(const Mat& src_img, vector<KeyPoint>& kpt, vector<float>& descriptor)
-int controlOR::extractFeatures(const cv::Mat& src_img, cv::vector<cv::KeyPoint>& kpt, cv::Mat& descriptor) const
+int controlOR::extractFeatures(const cv::Mat& src_img, std::vector<cv::KeyPoint>& kpt, cv::Mat& descriptor) const
 {
 	// extract freak
 	try{

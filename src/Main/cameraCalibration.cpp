@@ -130,7 +130,7 @@ bool cameraCalibration::doCalibration()
 	vector<vector<Point2f>> image_points;
 
 	int found_num = 0;
-	cvNamedWindow ("Calibration", CV_WINDOW_AUTOSIZE);
+	namedWindow ("Calibration", WINDOW_AUTOSIZE);
 	vector<Mat>::iterator img_itr = checker_image_list.begin();
 	i = 0;
 	while (img_itr != checker_image_list.end()) {
@@ -147,9 +147,9 @@ bool cameraCalibration::doCalibration()
 	    }
 		// Fixed a corner position in the sub-pixel accuracy, drawing
 		Mat src_gray(img_itr->size(), CV_8UC1, 1);
-		cvtColor(*img_itr, src_gray, CV_BGR2GRAY);
+		cvtColor(*img_itr, src_gray, COLOR_BGR2GRAY);
 //		cvCvtColor (src_img[i], src_gray, CV_BGR2GRAY);
-		cornerSubPix(src_gray, corners, Size(3,3), Size(-1,-1), TermCriteria(CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 20, 0.03));
+		cornerSubPix(src_gray, corners, Size(3,3), Size(-1,-1), TermCriteria(TermCriteria::MAX_ITER|TermCriteria::EPS, 20, 0.03));
 //		cvFindCornerSubPix (src_gray, &corners[i * PAT_SIZE], corner_count,
 //                       cvSize (3, 3), cvSize (-1, -1), cvTermCriteria (CV_TERMCRIT_ITER | CV_TERMCRIT_EPS, 20, 0.03));
 		drawChessboardCorners(*img_itr, pattern_size, transPointVecToMat2D(corners), found);
@@ -161,12 +161,12 @@ bool cameraCalibration::doCalibration()
 		}
 		corners.clear();
 
-		cvShowImage ("Calibration", &((IplImage)(*img_itr)));
-		cvWaitKey (0);
+		imshow("Calibration", *img_itr);
+		waitKey (0);
 		i++;
 		img_itr++;
 	}
-	cvDestroyWindow ("Calibration");
+	destroyWindow ("Calibration");
 
 	if (found_num < 3){
 		return false;

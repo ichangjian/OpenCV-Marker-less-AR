@@ -1,7 +1,7 @@
 
 #define __GLMETASEQ_C__
 #include "GLMetaseq.h"
-
+#include <string.h>
 /*
 
 GLMetaseq
@@ -292,7 +292,7 @@ GLuint mqoSetTexturePool(char *texfile, char *alpfile, unsigned char alpha )
 
 /*=========================================================================
 [Function]mqoClearTexturePool()
-[Applications]ƒeƒNƒXƒ`ƒƒƒv[ƒ‹‚ÌŠJ•ú
+[Applications]ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½vï¿½[ï¿½ï¿½ï¿½ÌŠJï¿½ï¿½
 [Argument]None
 [Return value] None
 =========================================================================*/
@@ -367,7 +367,7 @@ GLubyte* mqoLoadTextureEx(char *texfile,char *alpfile,int *tex_size,unsigned cha
 	pngimage = NULL;
 #endif
 	size = - 1;
-	for ( fl = 0; fl < 2; fl++ ) {//Texture = fl = 0 ƒ¿ = fl = 1
+	for ( fl = 0; fl < 2; fl++ ) {//Texture = fl = 0 ï¿½ï¿½ = fl = 1
 		if ( filename[fl] == NULL ) continue;
 		namelen = strlen(filename[fl]);
 		ext[0] = tolower(filename[fl][namelen-3]);
@@ -687,6 +687,7 @@ int mqoLoadFile( MQO_OBJECT *mqoobj, char *filename, double scale, unsigned char
 				M[i].texName = mqoSetTexturePool(path_tex,path_alp,alpha);
 			}
 			else {
+				printf("%s\n", path_tex);
 				M[i].texName = mqoSetTexturePool(path_tex,NULL,alpha);
 			}
 		}
@@ -931,8 +932,8 @@ To extract only the directory path from a string that contains the [Applications
 
 [Return value] None
 [Specification] Example:
-"C: /data/file.bmp" ¨ "C: / data /"
-"data / file.mqo" ¨ "data /"
+"C: /data/file.bmp" ï¿½ï¿½ "C: / data /"
+"data / file.mqo" ï¿½ï¿½ "data /"
 =========================================================================*/
 
 void mqoGetDirectory(const char *path_file, char *path_dir)
@@ -1317,7 +1318,7 @@ alpha alpha
 [Return value] None
 [Specification] Since all vertex array to triangle, square divided into triangular x2
 0 3 0 0 3
-  ¨ ¢ ¤
+ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
 1 2 1 2 2
 =========================================================================*/
 
@@ -1611,7 +1612,7 @@ void mqoMakePolygon(MQO_OBJDATA *readObj, MQO_OBJECT *mqoobj,
 		if ( F[f].n == 4 ) {
 // 4 vertex (squares) divided into three vertex (triangle) x2
 // 0 3 0 0 3
-//   ¨ ¢ ¤
+// ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
 // 1 2 1 2 2
 // 4 vertices of the plane data
 // 3 plane data x2 vertices

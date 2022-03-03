@@ -110,8 +110,8 @@ void slideModelObject::loadModelFile(string filename)
 	try{
 		FileStorage cvfs;
 		// Reading of Config file
-		cvfs.open(filename, CV_STORAGE_READ);
-		
+		cvfs.open(filename, cv::FileStorage::READ);
+
 		FileNode fn,fn2;
 		fn2 = cvfs["Slides"];
 		fn = fn2["DisplaySize"];

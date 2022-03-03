@@ -56,7 +56,7 @@
 using namespace std;
 using namespace cv;
 using namespace cvar;
-using namespace cvar::or;
+using namespace cvar::OR;
 using namespace cvar::tracking;
 using namespace cvar::overlay;
 
@@ -97,7 +97,7 @@ void setARConfigFile(string& conf_f)
 }
 
 
-void readModelParams(FileNode& fn, string& modelfile_name, int& type_id, float& scale, Mat& initRot, Mat& initTrans)
+void readModelParams(FileNode fn, string& modelfile_name, int& type_id, float& scale, Mat& initRot, Mat& initTrans)
 {
 	string model_type;
 
@@ -159,12 +159,12 @@ void readModelParams(FileNode& fn, string& modelfile_name, int& type_id, float& 
 }
 
 
-void setARConfig(Size& frame_size)
+void setARConfig(Size frame_size)
 {
 	try{
 		FileStorage cvfs;
 		// Reading of Config file
-		cvfs.open(config_file, CV_STORAGE_READ);
+		cvfs.open(config_file, cv::FileStorage::READ);
 
 		// It calculates the texture size for the input frame (power of two)
 		int tw = 128;
@@ -302,7 +302,7 @@ void displayFunc(void)
 #ifndef NO_OBJRECOG
 	// Throw the image you want to draw to the texture
 	Mat grayImg;
-	cvtColor(frame, grayImg, CV_BGR2GRAY);
+	cvtColor(frame, grayImg, cv::COLOR_BGR2GRAY);
 
 	if(!track_f){
 		try{

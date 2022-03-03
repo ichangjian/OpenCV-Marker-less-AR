@@ -153,7 +153,7 @@ bool viewModel::addModel(int id, Size& markerSize, int model_type, const string&
 	mdl_info.modelFilename = model_filename;
 	mdl_info.model = modelFac.create(model_type);
 	mdl_info.model->init();
-	mdl_info.model->loadModelFile((char*)model_filename.c_str());		// Load Model
+	mdl_info.model->loadModelFile(mdl_info.modelFilename); // Load Model
 	mdl_info.scale = scale;
 //	mdl_info.initRot = convertMatType(initRot);
 	initRot.convertTo(mdl_info.initRot, mat_type);

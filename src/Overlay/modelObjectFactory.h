@@ -34,7 +34,7 @@
 #define __MODELOBJECT_FACTORY__
 
 
-#include "modelobject.h"
+#include "modelObject.h"
 #include "mqoModelObject.h"
 #include "slideModelObject.h"
 #include "mqoSeqModelObject.h"

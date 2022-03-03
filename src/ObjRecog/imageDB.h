@@ -34,9 +34,9 @@
 #define __IMAGE_DB__
 
 #include <opencv2/features2d/features2d.hpp>
-
+#include <map>
 namespace cvar{
-namespace or{
+namespace OR{
 
 typedef struct{
 	int in_feat_i;
@@ -123,7 +123,7 @@ private:
 	float threshold;	// Feature points match threshold (0 - 1)
 	float geo_threshold;
 	double dist_diff_threshold;	// The tolerance on the position of the corresponding point (the ratio of the image size: 0 - 1)
-//	double angle_diff_threshold;	// Tolerance 180 degrees ~ about the angle of the corresponding point (0 - 1)
+//	double angle_diff_threshold;	// Tolerance 180 degrees ï¿½~ about the angle of the corresponding point (0 - 1)
 //	double scale_diff_threshold;	// Tolerance on the scale of the corresponding point (the ratio of the size:> 1)
 };
 

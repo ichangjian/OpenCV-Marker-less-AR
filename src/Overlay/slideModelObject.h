@@ -36,7 +36,7 @@
 #include <vector>
 #include <GL/glut.h>
 #include <opencv2/core/core.hpp>
-#include "modelobject.h"
+#include "modelObject.h"
 
 namespace cvar{
 namespace overlay{

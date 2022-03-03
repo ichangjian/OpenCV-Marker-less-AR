@@ -38,7 +38,7 @@
 namespace cvar{
 
 // Debugging functions
-CvMat* loadCsvFileAsMatrix(char* filename, int cv_type);
+// CvMat* loadCsvFileAsMatrix(char* filename, int cv_type);
 void createMatchingImage(cv::Mat& src_img, cv::Mat& dest_img, std::vector<cv::Point>& src_pts, std::vector<cv::Point>& dest_pts);
 void createMatchingImage(cv::Mat& src_img, cv::Mat& dest_img, std::vector<cv::Point2f>& src_pts, std::vector<cv::Point2f>& dest_pts);
 void truncatePoint(cv::Size& size, cv::Point2f& pt);	// To approximate the point that protrude a specified size to the size in the vicinity of point

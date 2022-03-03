@@ -41,7 +41,7 @@
 
 namespace cvar{
 
-namespace or{
+namespace OR{
 
 class controlOR
 {
